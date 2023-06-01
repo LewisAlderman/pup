@@ -1,5 +1,5 @@
 {
-	"name": "pup",
+	"name": "@lewald/pup",
 	"version": "0.0.1",
 	"license": "MIT",
 	"bin": "dist/cli.js",
