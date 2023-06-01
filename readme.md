@@ -13,13 +13,13 @@ $ npm install --global pup
 ```
 $ pup --help
 
-  Usage
-    $ pup
+	Usage
+	  $ pup
 
-  Options
-    --name  Your name
+	Options
+		--confirm  Should program get confirmation before running
+		-c  Should program get confirmation before running
 
-  Examples
-    $ pup --name=Jane
-    Hello, Jane
+	Examples
+	  $ pup -c
 ```
