@@ -23,16 +23,11 @@
 				"ERD still correct",
 				"Seeders updated and working"
 			]
-		},
-		{
-			"label": "Project management",
-			"value": "pm",
-			"options": ["Do the thing"]
 		}
 	],
 	"alwaysShownOptions": [
 		"Requires new environment variables",
 		"Updates the README (if possible, think: onboarding new devs)",
-		"Project/Tasks board is up to date (Monday, etc.)"
+		"Project/tasks board is up to date (Monday, etc.)"
 	]
 }
