@@ -75,6 +75,6 @@ export default function App({confirm}: Props) {
 const AppLoader = () => (
 	<Box>
 		<Spinner type="dots" />
-		<Text> 🐒</Text>
+		<Text> 🐶</Text>
 	</Box>
 );

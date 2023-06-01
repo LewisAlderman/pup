@@ -78,7 +78,7 @@ export const StepGenerateOutput = () => {
 		<>
 			<Box>
 				<Spinner type="dots" />
-				<Text> 🔧🐒</Text>
+				<Text> 🔧🐶</Text>
 			</Box>
 			<Text>&nbsp;</Text>
 		</>
