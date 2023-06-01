@@ -7,14 +7,13 @@ import App from './app.js';
 const cli = meow(
 	`
 	Usage
-	  $ my-ink-cli
+	  $ pup
 
 	Options
-		--confirm  Should program confirm before beginning
+		--confirm  Should program get confirmation before running
 
 	Examples
-	  $ my-ink-cli --name=Jane
-	  Hello, Jane
+	  $ pup
 `,
 	{
 		importMeta: import.meta,

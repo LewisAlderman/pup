@@ -1,5 +1,5 @@
 {
-	"name": "my-ink-cli",
+	"name": "pup",
 	"version": "0.0.0",
 	"license": "MIT",
 	"bin": "dist/cli.js",
@@ -7,6 +7,21 @@
 	"engines": {
 		"node": ">=16"
 	},
+	"keywords": [
+		"cli",
+		"github",
+		"pr",
+		"template"
+	],
+	"author": {
+		"name": "Lewis Alderman",
+		"email": "lewis@gravitywell.co.uk",
+		"url": "https://github.com/LewisAlderman",
+		"twitter": "@lewald_",
+		"github": "LewisAlderman"
+	},
+	"repository": "https://github.com/LewisAlderman/pup",
+	"homepage": "https://github.com/LewisAlderman/pup",
 	"scripts": {
 		"build": "tsc",
 		"dev": "tsc --watch",

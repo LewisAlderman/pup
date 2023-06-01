@@ -32,26 +32,28 @@ export const Confirm = ({onConfirm}: {onConfirm: () => void}) => {
 
 	return (
 		<>
-			<Text>Want to generate a PR template?</Text>
 			<Box gap={0.5}>
-				<Text
-					underline={highlightedIdx === 0}
-					color={highlightedIdx === 0 ? 'red' : undefined}
-				>
-					n
-				</Text>
-				<Text> / </Text>
-				<Text
-					underline={highlightedIdx === 1}
-					color={highlightedIdx === 1 ? 'green' : undefined}
-				>
-					y
-				</Text>
-
-				<Box paddingX={2}>
-					<Text dimColor> — or press n / y</Text>
+				<Text>Would you like to generate a PR template?</Text>
+				<Box>
+					<Text
+						underline={highlightedIdx === 0}
+						bold={highlightedIdx === 0}
+						color={highlightedIdx === 0 ? 'red' : undefined}
+					>
+						n
+					</Text>
+					<Text> / </Text>
+					<Text
+						underline={highlightedIdx === 1}
+						bold={highlightedIdx === 1}
+						color={highlightedIdx === 1 ? 'green' : undefined}
+					>
+						y
+					</Text>
 				</Box>
 			</Box>
+
+			<Text dimColor> — or press n / y</Text>
 		</>
 	);
 };

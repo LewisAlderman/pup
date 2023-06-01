@@ -5,21 +5,21 @@
 ## Install
 
 ```bash
-$ npm install --global my-ink-cli
+$ npm install --global pup
 ```
 
 ## CLI
 
 ```
-$ my-ink-cli --help
+$ pup --help
 
   Usage
-    $ my-ink-cli
+    $ pup
 
   Options
     --name  Your name
 
   Examples
-    $ my-ink-cli --name=Jane
+    $ pup --name=Jane
     Hello, Jane
 ```
