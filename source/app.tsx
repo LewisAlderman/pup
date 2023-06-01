@@ -15,15 +15,16 @@ import {Confirm} from './components/Confirm.js';
 
 type Props = {
 	confirm?: boolean;
+	c?: boolean;
 };
 
 const STEP_COUNT = new Array(999).fill(null);
 
-export default function App({confirm}: Props) {
+export default function App({confirm, c}: Props) {
 	const {exit} = useApp();
 	const {} = useFocusManager();
 	const {} = useFocus();
-	const [showConfirm, setShowConfirm] = useState(confirm);
+	const [showConfirm, setShowConfirm] = useState(confirm || c);
 	const [config, setConfig] = useState<
 		ContextType<typeof ConfigContext>['state']
 	>({items: [] as any});
@@ -33,7 +34,7 @@ export default function App({confirm}: Props) {
 		ContextType<typeof SelectedChecksContext>['items']
 	>([]);
 
-	if (confirm && showConfirm) {
+	if ((confirm || c) && showConfirm) {
 		return <Confirm onConfirm={() => setShowConfirm(false)} />;
 	}
 

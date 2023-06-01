@@ -11,9 +11,10 @@ const cli = meow(
 
 	Options
 		--confirm  Should program get confirmation before running
+		--c  Should program get confirmation before running
 
 	Examples
-	  $ pup
+	  $ pup -c
 `,
 	{
 		importMeta: import.meta,
@@ -21,8 +22,11 @@ const cli = meow(
 			confirm: {
 				type: 'boolean',
 			},
+			c: {
+				type: 'boolean',
+			},
 		},
 	},
 );
 
-render(<App confirm={cli.flags.confirm} />);
+render(<App confirm={cli.flags.confirm} c={cli.flags.c} />);
