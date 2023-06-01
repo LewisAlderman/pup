@@ -388,7 +388,9 @@ const StepGenerateOutput = () => {
 			(diffErr, diffStdOut, _diffStdErr) => {
 				if (!diffErr && diffStdOut?.length) {
 					exec(
-						"gh_url=$(git config --get remote.origin.url | sed 's/.git$//');gh_url+=/compare/;gh_url+=$(git branch --show-current);gh_url+='?expand=1&body=LMAO';echo ${gh_url}",
+						`gh_url=$(git config --get remote.origin.url | sed 's/.git$//');gh_url+=/compare/;gh_url+=$(git branch --show-current);gh_url+='?expand=1&body=${encodeURIComponent(
+							formattedChecks,
+						)}'` + ';echo ${gh_url}',
 						(error, stdout, stderr) => {
 							if (error) {
 								console.error(`error: ${error.message}`);
