@@ -1,9 +1,9 @@
 import {createContext, useContext} from 'react';
-import {PR_TYPE_ITEMS} from '../data.js';
+import {ConfigItems} from '../components/ConfigLoader.js';
 
 export const PRTypesContext = createContext<{
-	items: typeof PR_TYPE_ITEMS;
-	setItems: (items: typeof PR_TYPE_ITEMS) => void;
-}>({items: [], setItems: () => {}});
+	items: ConfigItems;
+	setItems: (items: ConfigItems) => void;
+}>({items: [] as any, setItems: () => {}});
 
 export const usePRTypesContext = () => useContext(PRTypesContext);

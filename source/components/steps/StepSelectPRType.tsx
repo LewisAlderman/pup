@@ -2,11 +2,12 @@ import {Newline, useApp, useInput, Text} from 'ink';
 import React from 'react';
 import {usePRTypesContext} from '../../context/pr-types.js';
 import {useStepContext} from '../../context/step.js';
-import {PR_TYPE_ITEMS} from '../../data.js';
 import {useList} from '../../hooks/useList.js';
 import {useSelect} from '../../hooks/useSelect.js';
+import {ListItemMarker} from '../ListItemMarker.js';
+import {ConfigItems} from '../ConfigLoader.js';
 
-export const StepSelectPRType = () => {
+export const StepSelectPRType = ({items}: {items: ConfigItems}) => {
 	const {exit} = useApp();
 	const {nextStep: _nextStep} = useStepContext();
 	const {setItems} = usePRTypesContext();
@@ -15,7 +16,7 @@ export const StepSelectPRType = () => {
 		index: focusedIdx,
 		next: nextFocusIdx,
 		prev: prevFocusIdx,
-	} = useList(PR_TYPE_ITEMS);
+	} = useList(items);
 
 	const {
 		toggle: toggledSelectedPRType,
@@ -24,7 +25,7 @@ export const StepSelectPRType = () => {
 	} = useSelect();
 
 	const nextStep = () => {
-		setItems(PR_TYPE_ITEMS.filter(item => getIsSelectedPRType(item.value)));
+		setItems(items.filter(item => getIsSelectedPRType(item.value)) as any);
 		_nextStep();
 	};
 
@@ -42,9 +43,9 @@ export const StepSelectPRType = () => {
 		}
 
 		if (input === ' ') {
-			if (PR_TYPE_ITEMS[focusedIdx]?.value) {
+			if (items[focusedIdx]?.value) {
 				// @ts-ignore
-				toggledSelectedPRType(PR_TYPE_ITEMS[focusedIdx]?.value);
+				toggledSelectedPRType(items[focusedIdx]?.value);
 			} else {
 				exit(new Error('Unknown index'));
 			}
@@ -65,7 +66,7 @@ export const StepSelectPRType = () => {
 			</Text>
 			<Text>&nbsp;</Text>
 
-			{PR_TYPE_ITEMS.map((item, index) => {
+			{items.map((item, index) => {
 				return (
 					<Text
 						key={item.value}
