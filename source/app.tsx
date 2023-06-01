@@ -1,7 +1,17 @@
-import {Newline, Text, useApp, useFocus, useFocusManager, useInput} from 'ink';
+import {
+	Box,
+	Newline,
+	Text,
+	useApp,
+	useFocus,
+	useFocusManager,
+	useInput,
+} from 'ink';
+import Spinner from 'ink-spinner';
 import React, {
 	ContextType,
 	Fragment,
+	Suspense,
 	createContext,
 	useContext,
 	useEffect,
@@ -418,7 +428,15 @@ const StepGenerateOutput = () => {
 		exit();
 	}, []);
 
-	return <></>;
+	return (
+		<>
+			<Box>
+				<Spinner type="dots" />
+				<Text> 🔧🐒</Text>
+			</Box>
+			<Text>&nbsp;</Text>
+		</>
+	);
 };
 
 const STEP_COUNT = new Array(999).fill(null);
@@ -434,30 +452,32 @@ export default function App({}: Props) {
 	>([]);
 
 	return (
-		<StepContext.Provider value={{step, nextStep, prevStep}}>
-			<PRTypesContext.Provider value={{items: PRTypes, setItems: setPRTypes}}>
-				<SelectedChecksContext.Provider
-					value={{items: selectedChecks, setItems: setSelectedChecks}}
-				>
-					{/* @ts-ignore */}
-					{(() => {
-						switch (step) {
-							case 1:
-								return <StepSelectPRType />;
+		<Suspense fallback={<Text>Loading...</Text>}>
+			<StepContext.Provider value={{step, nextStep, prevStep}}>
+				<PRTypesContext.Provider value={{items: PRTypes, setItems: setPRTypes}}>
+					<SelectedChecksContext.Provider
+						value={{items: selectedChecks, setItems: setSelectedChecks}}
+					>
+						{/* @ts-ignore */}
+						{(() => {
+							switch (step) {
+								case 1:
+									return <StepSelectPRType />;
 
-							case 2:
-								return <StepSelectChecks />;
+								case 2:
+									return <StepSelectChecks />;
 
-							case 3:
-								return <StepGenerateOutput />;
+								case 3:
+									return <StepGenerateOutput />;
 
-							default:
-								<>{exit()}</>;
-						}
-					})()}
-				</SelectedChecksContext.Provider>
-			</PRTypesContext.Provider>
-		</StepContext.Provider>
+								default:
+									<>{exit()}</>;
+							}
+						})()}
+					</SelectedChecksContext.Provider>
+				</PRTypesContext.Provider>
+			</StepContext.Provider>
+		</Suspense>
 	);
 }
 
