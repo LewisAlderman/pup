@@ -11,17 +11,19 @@ import {useList} from './hooks/useList.js';
 import Spinner from 'ink-spinner';
 import {ConfigLoader} from './components/ConfigLoader.js';
 import {ConfigContext} from './context/config.js';
+import {Confirm} from './components/Confirm.js';
 
 type Props = {
-	name?: string;
+	confirm?: boolean;
 };
 
 const STEP_COUNT = new Array(999).fill(null);
 
-export default function App({}: Props) {
+export default function App({confirm}: Props) {
 	const {exit} = useApp();
 	const {} = useFocusManager();
 	const {} = useFocus();
+	const [showConfirm, setShowConfirm] = useState(confirm);
 	const [config, setConfig] = useState<
 		ContextType<typeof ConfigContext>['state']
 	>({items: [] as any});
@@ -31,53 +33,9 @@ export default function App({}: Props) {
 		ContextType<typeof SelectedChecksContext>['items']
 	>([]);
 
-	// console.log('**************');
-	// console.log(
-	// 	'!',
-	// 	JSON.stringify(
-	// 		ConfigSchema.parseAsync({
-	// 			items: [
-	// 				{
-	// 					label: 'Native app',
-	// 					value: 'native-app',
-	// 					options: ['Requires a new release/build of the app'],
-	// 				},
-	// 				{
-	// 					label: 'Web frontend',
-	// 					value: 'web-frontend',
-	// 					options: [
-	// 						'Responsive design done',
-	// 						'Works on mobile (check Safari)',
-	// 						'Works on desktop (check Firefox & Safari)',
-	// 						'Builds without errors',
-	// 					],
-	// 				},
-	// 				{
-	// 					label: 'Backend',
-	// 					value: 'backend',
-	// 					options: [
-	// 						'Requires migrations to run',
-	// 						'ERD still correct',
-	// 						'Seeders updated and working',
-	// 					],
-	// 				},
-	// 				{
-	// 					label: 'Project management',
-	// 					value: 'pm',
-	// 					options: [''],
-	// 				},
-	// 			],
-	// 			alwaysShownOptions: [
-	// 				'Requires new environment variables',
-	// 				'Updates the README (if possible, think: onboarding new devs)',
-	// 				'Project/Tasks board is up to date (Monday, etc.)',
-	// 			],
-	// 		}),
-	// 		null,
-	// 		2,
-	// 	),
-	// );
-	// console.log('**************');
+	if (confirm && showConfirm) {
+		return <Confirm onConfirm={() => setShowConfirm(false)} />;
+	}
 
 	return (
 		<Suspense fallback={<AppLoader />}>

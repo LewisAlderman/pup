@@ -10,7 +10,7 @@ const cli = meow(
 	  $ my-ink-cli
 
 	Options
-		--name  Your name
+		--confirm  Should program confirm before beginning
 
 	Examples
 	  $ my-ink-cli --name=Jane
@@ -19,12 +19,11 @@ const cli = meow(
 	{
 		importMeta: import.meta,
 		flags: {
-			name: {
-				type: 'string',
+			confirm: {
+				type: 'boolean',
 			},
 		},
 	},
 );
 
-// @ts-ignore
-render(<App name={cli.flags.name} />);
+render(<App confirm={cli.flags.confirm} />);
