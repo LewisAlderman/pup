@@ -356,11 +356,8 @@ const StepGenerateOutput = () => {
 	const formattedChecks = items.map(item => `- [ ] ${item}`).join('\n');
 
 	useEffect(() => {
-		let ghURL: string;
-
-		exec(
-			"gh_url=$(git config --get remote.origin.url | sed 's/.git$//');gh_url+=/compare/;gh_url+=$(git branch --show-current);gh_url+='?expand=1&body=LMAO';echo ${gh_url}",
-			(error, stdout, stderr) => {
+		const finalOutput = (ghURL?: string) =>
+			exec(`echo '${formattedChecks}' | pbcopy`, (error, _stdout, stderr) => {
 				if (error) {
 					console.error(`error: ${error.message}`);
 					return;
@@ -371,40 +368,48 @@ const StepGenerateOutput = () => {
 					return;
 				}
 
-				if (stdout?.includes('https://github.com')) {
-					ghURL = stdout;
+				console.log(formattedChecks);
+				console.log('\n');
+				console.log('✅ Copied to clipboard!');
+				console.log('\n');
+				console.log(`—but if that didn't work, simply copy from up there 👆`);
+
+				if (ghURL) {
+					console.log('\n');
+					console.log(`—alternatively open it up as a pre-filled PR here 👇`);
+					console.log(ghURL);
 				}
+			});
 
-				exec(
-					`echo '${formattedChecks}' | pbcopy`,
-					(_error, _stdout, _stderr) => {
-						if (_error) {
-							console.error(`error: ${_error.message}`);
-							return;
-						}
+		let ghURL: string;
 
-						if (stderr) {
-							console.error(`stderr: ${_stderr}`);
-							return;
-						}
+		exec(
+			"GIT_DEFAULT_BRANCH=$(LC_ALL=C git remote show origin | sed -n '/HEAD branch/s/.*: //p') && git diff --quiet $GIT_DEFAULT_BRANCH; echo $?",
+			(diffErr, diffStdOut, _diffStdErr) => {
+				if (!diffErr && diffStdOut?.length) {
+					exec(
+						"gh_url=$(git config --get remote.origin.url | sed 's/.git$//');gh_url+=/compare/;gh_url+=$(git branch --show-current);gh_url+='?expand=1&body=LMAO';echo ${gh_url}",
+						(error, stdout, stderr) => {
+							if (error) {
+								console.error(`error: ${error.message}`);
+								return;
+							}
 
-						console.log(formattedChecks);
-						console.log('\n');
-						console.log('✅ Copied to clipboard!');
-						console.log('\n');
-						console.log(
-							`—but if that didn't work, simply copy from up there 👆`,
-						);
+							if (stderr) {
+								console.error(`stderr: ${stderr}`);
+								return;
+							}
 
-						if (ghURL) {
-							console.log('\n');
-							console.log(
-								`—alternatively open it up as a pre-filled PR here 👇`,
-							);
-							console.log(ghURL);
-						}
-					},
-				);
+							if (stdout?.length && stdout.includes('https://github.com')) {
+								ghURL = stdout;
+							}
+
+							finalOutput(ghURL);
+						},
+					);
+				} else {
+					finalOutput();
+				}
 			},
 		);
 
