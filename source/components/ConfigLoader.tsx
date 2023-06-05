@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import fs from 'fs';
 import {useConfigContext} from '../context/config.js';
 import {ConfigSchema} from '../schema.js';
+import {exec} from 'child_process';
 
 let promise: Promise<void> | undefined;
 let state: string | undefined;
@@ -18,13 +19,30 @@ const loadConfigJson = () => {
 				fs.readFile('./pup.json', (err, _json) => {
 					if (err) {
 						if (err.code === 'ENOENT' && err.syscall === 'open') {
-							console.log('Could not find pup file!');
-						}
+							console.log(
+								'Could not find pup file! – creating an empty file for you.',
+							);
+							console.log(
+								"Here's a reminder of the zod schema for the config file:\n",
+							);
+							exec('node dist/scripts/schema-to-stdout', (_err, stdout) => {
+								if (_err) throw _err;
+								console.log(stdout);
+								fs.writeFileSync(
+									'./pup.json',
+									`{
+  "items": []
+}`,
+								);
 
-						throw err;
+								throw err;
+							});
+						}
 					}
 
-					json = _json.toString();
+					if (_json) {
+						json = _json.toString();
+					}
 					resolve('done');
 				}),
 			),
