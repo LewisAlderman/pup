@@ -1,5 +1,5 @@
 import {Box, Text, useApp, useFocus, useFocusManager} from 'ink';
-import React, {ContextType, Suspense} from 'react';
+import React, {ContextType, Suspense, useEffect} from 'react';
 import {useState} from 'react';
 import {StepContext} from './context/step.js';
 import {StepGenerateOutput} from './components/steps/StepGenerateOutput.js';
@@ -12,15 +12,17 @@ import Spinner from 'ink-spinner';
 import {ConfigLoader} from './components/ConfigLoader.js';
 import {ConfigContext} from './context/config.js';
 import {Confirm} from './components/Confirm.js';
+import {exec} from 'child_process';
 
 type Props = {
 	confirm?: boolean;
 	c?: boolean;
+	print?: boolean;
 };
 
 const STEP_COUNT = new Array(999).fill(null);
 
-export default function App({confirm, c}: Props) {
+export default function App({confirm, c, print}: Props) {
 	const {exit} = useApp();
 	const {} = useFocusManager();
 	const {} = useFocus();
@@ -33,6 +35,18 @@ export default function App({confirm, c}: Props) {
 	const [selectedChecks, setSelectedChecks] = useState<
 		ContextType<typeof SelectedChecksContext>['items']
 	>([]);
+
+	useEffect(() => {
+		if (print) exit();
+	}, [print]);
+
+	if (print) {
+		exec('node dist/scripts/schema-to-stdout', (_err, stdout) => {
+			console.log(stdout);
+		});
+
+		return null;
+	}
 
 	if ((confirm || c) && showConfirm) {
 		return <Confirm onConfirm={() => setShowConfirm(false)} />;

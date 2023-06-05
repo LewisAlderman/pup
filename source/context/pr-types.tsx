@@ -1,5 +1,5 @@
 import {createContext, useContext} from 'react';
-import {ConfigItems} from '../components/ConfigLoader.js';
+import {ConfigItems} from '../schema.js';
 
 export const PRTypesContext = createContext<{
 	items: ConfigItems;

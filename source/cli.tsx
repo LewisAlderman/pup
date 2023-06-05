@@ -12,6 +12,7 @@ const cli = meow(
 	Options
 		--confirm  Should program get confirmation before running
 		--c  Should program get confirmation before running
+		--print  Prints out zod config schema for reference
 
 	Examples
 	  $ pup -c
@@ -25,8 +26,13 @@ const cli = meow(
 			c: {
 				type: 'boolean',
 			},
+			print: {
+				type: 'boolean',
+			},
 		},
 	},
 );
 
-render(<App confirm={cli.flags.confirm} c={cli.flags.c} />);
+render(
+	<App confirm={cli.flags.confirm} c={cli.flags.c} print={cli.flags.print} />,
+);

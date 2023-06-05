@@ -1,6 +1,6 @@
 import {createContext, useContext} from 'react';
 import z from 'zod';
-import {ConfigSchema} from '../components/ConfigLoader.js';
+import {ConfigSchema} from '../schema.js';
 
 type TConfig = z.infer<typeof ConfigSchema>;
 

@@ -5,7 +5,7 @@ import {useStepContext} from '../../context/step.js';
 import {useList} from '../../hooks/useList.js';
 import {useSelect} from '../../hooks/useSelect.js';
 import {ListItemMarker} from '../ListItemMarker.js';
-import {ConfigItems} from '../ConfigLoader.js';
+import {ConfigItems} from '../../schema.js';
 
 export const StepSelectPRType = ({items}: {items: ConfigItems}) => {
 	const {exit} = useApp();
