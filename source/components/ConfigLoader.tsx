@@ -17,6 +17,10 @@ const loadConfigJson = () => {
 			new Promise(resolve =>
 				fs.readFile('./pup.json', (err, _json) => {
 					if (err) {
+						if (err.code === 'ENOENT' && err.syscall === 'open') {
+							console.log('Could not find pup file!');
+						}
+
 						throw err;
 					}
 
