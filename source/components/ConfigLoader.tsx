@@ -34,7 +34,7 @@ const loadConfigJson = () => {
 
 		promise = Promise.all([
 			new Promise(resolve =>
-				fs.readFile('./test.json', (err, _json) => {
+				fs.readFile('./pup.json', (err, _json) => {
 					if (err) {
 						throw err;
 					}
