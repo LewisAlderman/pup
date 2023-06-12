@@ -26,7 +26,7 @@
 		"build": "tsc",
 		"dev": "tsc --watch",
 		"test": "prettier --check . && xo && ava",
-		"x": "3"
+		"x": "4"
 	},
 	"files": [
 		"dist"
