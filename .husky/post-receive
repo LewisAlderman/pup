@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# node dist/cli.js -c
+echo "This is a server-side message" >&2
