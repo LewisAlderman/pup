@@ -3,11 +3,30 @@ import React, {useEffect} from 'react';
 import fs from 'fs';
 import {useConfigContext} from '../context/config.js';
 import {ConfigSchema} from '../schema.js';
-import {exec} from 'child_process';
 
 let promise: Promise<void> | undefined;
 let state: string | undefined;
 let value: string | undefined;
+
+export const ConfigLoader = () => {
+	const json = loadConfigJson();
+	const parsed = JSON.parse(json ?? JSON.stringify({}));
+
+	const {setState} = useConfigContext();
+
+	useEffect(() => {
+		(async () => {
+			if (parsed) {
+				const validated = await ConfigSchema.parseAsync(parsed);
+				if (validated) {
+					setState(parsed);
+				}
+			}
+		})();
+	}, [parsed]);
+
+	return <Text>Loading configuration &hellip;</Text>;
+};
 
 // @ts-ignore
 const loadConfigJson = () => {
@@ -19,24 +38,10 @@ const loadConfigJson = () => {
 				fs.readFile('./pup.json', (err, _json) => {
 					if (err) {
 						if (err.code === 'ENOENT' && err.syscall === 'open') {
-							console.log(
-								'Could not find pup file! – creating an empty file for you.',
+							console.warn(
+								'Could not find pup file! Run `pup --init` to create a skeleton config.',
 							);
-							console.log(
-								"Here's a reminder of the zod schema for the config file:\n",
-							);
-							exec('node dist/scripts/schema-to-stdout', (_err, stdout) => {
-								if (_err) throw _err;
-								console.log(stdout);
-								fs.writeFileSync(
-									'./pup.json',
-									`{
-  "items": []
-}`,
-								);
-
-								throw err;
-							});
+							process.exit(1);
 						}
 					}
 
@@ -66,24 +71,4 @@ const loadConfigJson = () => {
 	if (state === 'done') {
 		return value;
 	}
-};
-
-export const ConfigLoader = () => {
-	const json = loadConfigJson();
-	const parsed = JSON.parse(json ?? JSON.stringify({}));
-
-	const {setState} = useConfigContext();
-
-	useEffect(() => {
-		(async () => {
-			if (parsed) {
-				const validated = await ConfigSchema.parseAsync(parsed);
-				if (validated) {
-					setState(parsed);
-				}
-			}
-		})();
-	}, [parsed]);
-
-	return <Text>Loading configuration &hellip;</Text>;
 };

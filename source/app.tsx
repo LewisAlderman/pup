@@ -18,11 +18,12 @@ type Props = {
 	confirm?: boolean;
 	c?: boolean;
 	print?: boolean;
+	init?: boolean;
 };
 
 const STEP_COUNT = new Array(999).fill(null);
 
-export default function App({confirm, c, print}: Props) {
+export default function App({confirm, c, print, init}: Props) {
 	const {exit} = useApp();
 	const {} = useFocusManager();
 	const {} = useFocus();
@@ -37,11 +38,21 @@ export default function App({confirm, c, print}: Props) {
 	>([]);
 
 	useEffect(() => {
-		if (print) exit();
-	}, [print]);
+		if (print || init) exit();
+	}, [print, init]);
 
+	// print zod schema to console
 	if (print) {
 		exec('node dist/scripts/schema-to-stdout', (_err, stdout) => {
+			console.log(stdout);
+		});
+
+		return null;
+	}
+
+	// create skeleton config
+	if (init) {
+		exec('node dist/scripts/init-empty-config', (_err, stdout) => {
 			console.log(stdout);
 		});
 

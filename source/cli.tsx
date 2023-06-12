@@ -13,6 +13,7 @@ const cli = meow(
 		--confirm  Should program get confirmation before running
 		--c  Should program get confirmation before running
 		--print  Prints out zod config schema for reference
+		--init	Initializes an empty pup config in current directory
 
 	Examples
 	  $ pup -c
@@ -29,10 +30,18 @@ const cli = meow(
 			print: {
 				type: 'boolean',
 			},
+			init: {
+				type: 'boolean',
+			},
 		},
 	},
 );
 
 render(
-	<App confirm={cli.flags.confirm} c={cli.flags.c} print={cli.flags.print} />,
+	<App
+		confirm={cli.flags.confirm}
+		c={cli.flags.c}
+		print={cli.flags.print}
+		init={cli.flags.init}
+	/>,
 );
