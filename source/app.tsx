@@ -1,4 +1,4 @@
-import {Box, Text, useApp, useFocus, useFocusManager} from 'ink';
+import {Box, Text, useApp, useFocus, useFocusManager, useStdin} from 'ink';
 import React, {ContextType, Suspense, useEffect} from 'react';
 import {useState} from 'react';
 import {StepContext} from './context/step.js';
@@ -24,6 +24,12 @@ type Props = {
 const STEP_COUNT = new Array(999).fill(null);
 
 export default function App({confirm, c, print, init}: Props) {
+	const {isRawModeSupported} = useStdin();
+
+	console.log('**************');
+	console.log({isRawModeSupported});
+	console.log('**************');
+
 	const {exit} = useApp();
 	const {} = useFocusManager();
 	const {} = useFocus();
