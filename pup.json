@@ -1,3 +1,9 @@
 {
-"items": []
+	"items": [
+		{
+			"label": "Home",
+			"value": "home",
+			"options": ["test"]
+		}
+	]
 }
