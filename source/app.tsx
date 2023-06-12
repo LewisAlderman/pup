@@ -26,6 +26,11 @@ const STEP_COUNT = new Array(999).fill(null);
 export default function App({confirm, c, print, init}: Props) {
 	const {isRawModeSupported} = useStdin();
 
+	if (!isRawModeSupported) {
+		console.log("Raw mode isn't supported.");
+		return null;
+	}
+
 	console.log('**************');
 	console.log({isRawModeSupported});
 	console.log('**************');
