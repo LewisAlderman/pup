@@ -1,4 +1,4 @@
-import {Box, Text, useApp, useFocus, useFocusManager} from 'ink';
+import {Box, Text, useApp, useFocus, useFocusManager, useStdin} from 'ink';
 import React, {ContextType, Suspense, useEffect} from 'react';
 import {useState} from 'react';
 import {StepContext} from './context/step.js';
@@ -24,12 +24,11 @@ type Props = {
 const STEP_COUNT = new Array(999).fill(null);
 
 export default function App({confirm, c, print, init}: Props) {
-	// const {isRawModeSupported} = useStdin();
+	const {isRawModeSupported} = useStdin();
 
-	// // if (!isRawModeSupported) {
-	// // 	console.log("Raw mode isn't supported.");
-	// // 	return null;
-	// // }
+	if (!isRawModeSupported) {
+		console.log("Raw mode isn't supported.");
+	}
 
 	const {exit} = useApp();
 	const {} = useFocusManager();
@@ -66,7 +65,7 @@ export default function App({confirm, c, print, init}: Props) {
 		return null;
 	}
 
-	if ((confirm || c) && showConfirm) {
+	if (isRawModeSupported && (confirm || c) && showConfirm) {
 		return <Confirm onConfirm={() => setShowConfirm(false)} />;
 	}
 
