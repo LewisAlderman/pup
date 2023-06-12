@@ -19,6 +19,8 @@ $ pup --help
 	Options
 		--confirm  Should program get confirmation before running
 		-c  Should program get confirmation before running
+		--print  Prints out zod config schema for reference
+		--init	Initializes an empty pup config in current directory
 
 	Examples
 	  $ pup -c
