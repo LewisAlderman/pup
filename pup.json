@@ -1,3 +1,33 @@
 {
-"items": []
+	"items": [
+		{
+			"label": "Native app",
+			"value": "native-app",
+			"options": ["Requires a new release/build of the app"]
+		},
+		{
+			"label": "Web frontend",
+			"value": "web-frontend",
+			"options": [
+				"Responsive design done",
+				"Works on mobile (check Safari)",
+				"Works on desktop (check Firefox & Safari)",
+				"Builds without errors???"
+			]
+		},
+		{
+			"label": "Backend",
+			"value": "backend",
+			"options": [
+				"Requires migrations to run",
+				"ERD still correct",
+				"Seeders updated and working"
+			]
+		}
+	],
+	"alwaysShownOptions": [
+		"Requires new environment variables",
+		"Updates the README (if possible, think: onboarding new devs)",
+		"Project/tasks board is up to date (Monday, etc.)"
+	]
 }
